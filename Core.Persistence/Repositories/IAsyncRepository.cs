@@ -1,14 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
+﻿using Core.Persistence.Dynamic;
+using Core.Persistence.Paging;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Core.Persistence.Repositories;
 
-public interface IAsyncRepository<TEntity, TEntityId>
+public interface IAsyncRepository<TEntity, TEntityId> : IQuery<TEntity>
     where TEntity : Entity<TEntityId>
 {
     Task<TEntity> GetAsync(
@@ -18,7 +21,7 @@ public interface IAsyncRepository<TEntity, TEntityId>
         bool enableTracking = true,
         CancellationToken cancellationToken = default
         );
-    Task<IPaginate<TEntity>> GetListAsync(
+    Task<Paginate<TEntity>> GetListAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
@@ -29,7 +32,7 @@ public interface IAsyncRepository<TEntity, TEntityId>
         CancellationToken cancellationToken = default
     );
 
-    Task<IPaginate<TEntity>> GetListByDynamicAsync(
+    Task<Paginate<TEntity>> GetListByDynamicAsync(
         DynamicQuery dynamic,
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
