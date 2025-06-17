@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Core.Persistence.Repositories;
 
-public interface IRepositoryIRepository<TEntity, TEntityId> : IQuery<TEntity>
+public interface IRepository<TEntity, TEntityId> : IQuery<TEntity>
     where TEntity : Entity<TEntityId>
 {
     TEntity? Get(
