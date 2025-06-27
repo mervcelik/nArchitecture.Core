@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Core.CrossCuttingConcerns.Exceptions.Types;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails;
 
-public class BusinessProblemDetails : ProblemDetails
+internal class AuthorizationProblemDetails : ProblemDetails
 {
-    public BusinessProblemDetails(string detail)
+    public AuthorizationProblemDetails(string detail)
     {
-        Title = "Rule Violation";
+        Title = "Authorization Violation";
         Detail = detail;
-        Status = StatusCodes.Status400BadRequest;
+        Status = StatusCodes.Status401Unauthorized;
         Type = "https://Example.com/probs/business";
     }
 }

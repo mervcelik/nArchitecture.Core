@@ -1,12 +1,12 @@
-﻿using Core.CrossCuttingConcerns.Exceptions.Types;
+﻿using Core.CrossCuttingConcerns.Exceptions.Extensions;
 using Core.CrossCuttingConcerns.Exceptions.HttpProblemDetails;
+using Core.CrossCuttingConcerns.Exceptions.Types;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.CrossCuttingConcerns.Exceptions.Extensions;
 
 namespace Core.CrossCuttingConcerns.Exceptions.Handlers;
 
@@ -36,6 +36,13 @@ public class HttpExceptionHandler : ExceptionHandler
     {
         Response.StatusCode = StatusCodes.Status400BadRequest;
         string details = new ValidationProblemDetails(validationException.Errors).AsJson();
+        return Response.WriteAsync(details);
+    }
+
+    protected override Task HandleException(AuthorizationException authorizationException)
+    {
+        Response.StatusCode = StatusCodes.Status400BadRequest;
+        string details = new AuthorizationProblemDetails(authorizationException.Message).AsJson();
         return Response.WriteAsync(details);
     }
 }
