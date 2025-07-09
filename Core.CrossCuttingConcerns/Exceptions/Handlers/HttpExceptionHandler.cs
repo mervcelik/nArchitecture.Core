@@ -38,6 +38,12 @@ public class HttpExceptionHandler : ExceptionHandler
         string details = new ValidationProblemDetails(validationException.Errors).AsJson();
         return Response.WriteAsync(details);
     }
+    public override Task HandleException(NotFoundException notFoundException)
+    {
+        Response.StatusCode = StatusCodes.Status404NotFound;
+        string details = new NotFoundProblemDetails(notFoundException.Message).AsJson();
+        return Response.WriteAsync(details);
+    }
 
     protected override Task HandleException(AuthorizationException authorizationException)
     {
