@@ -19,7 +19,7 @@ public class ResourceLocalizationManager : ILocalizationService
     // <locale, <section, <path, content>>>
     private readonly Dictionary<string, Dictionary<string, (string path, YamlMappingNode? content)>> _resourceData = [];
 
-    public ResourceLocalizationManager(Dictionary<string, Dictionary<string, string>> resources)
+    public ResourceLocalizationManager(Dictionary<string, Dictionary<string, string>> resources, ICollection<string>? acceptLocales)
     {
         foreach ((string locale, Dictionary<string, string> sectionResources) in resources)
         {
@@ -29,6 +29,8 @@ public class ResourceLocalizationManager : ILocalizationService
             foreach ((string sectionName, string sectionResourcePath) in sectionResources)
                 _resourceData[locale].Add(sectionName, (sectionResourcePath, null));
         }
+
+        AcceptLocales = acceptLocales ?? new List<string> { _defaultLocale };
     }
 
     public Task<string> GetLocalizedAsync(string key, string? keySection = null)
