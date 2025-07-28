@@ -46,7 +46,7 @@ public class HttpExceptionHandler : ExceptionHandler
 
     protected override Task HandleException(Exception exception)
     {
-        return WriteErrorResponse(StatusCodes.Status500InternalServerError, "Beklenmeyen bir hata oluştu.");
+        return WriteErrorResponse(StatusCodes.Status500InternalServerError, "Beklenmeyen bir hata oluştu."+exception.Message);
     }
 
     protected override Task HandleException(ValidationException validationException)
