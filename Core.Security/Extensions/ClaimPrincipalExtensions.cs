@@ -19,4 +19,6 @@ public static class ClaimsPrincipalExtensions
 
     public static int GetUserId(this ClaimsPrincipal claimsPrincipal) =>
         Convert.ToInt32(claimsPrincipal?.Claims(ClaimTypes.NameIdentifier)?.FirstOrDefault());
+    public static DateTime GetAccessTokenExpirationDate(this ClaimsPrincipal claimsPrincipal) =>
+        Convert.ToDateTime(claimsPrincipal?.Claims(ClaimTypes.Expired)?.FirstOrDefault());
 }

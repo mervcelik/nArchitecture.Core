@@ -20,4 +20,8 @@ public static class ClaimsExtension
 
     public static void AddRoles(this ICollection<Claim> claims, string[] roles) =>
         roles.ToList().ForEach(role => claims.Add(new Claim(ClaimTypes.Role, role)));
+
+
+    public static void AddAccessTokenExpirationDate(this ICollection<Claim> claims, DateTime date) =>
+      claims.Add(new Claim(ClaimTypes.Expired, date.ToString()));
 }

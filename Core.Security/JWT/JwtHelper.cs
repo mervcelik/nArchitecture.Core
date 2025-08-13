@@ -60,8 +60,7 @@ public class JwtHelper : ITokenHelper
         TokenOptions tokenOptions,
         User user,
         SigningCredentials signingCredentials,
-        IList<OperationClaim> operationClaims
-    )
+        IList<OperationClaim> operationClaims)
     {
         JwtSecurityToken jwt =
             new(
@@ -82,6 +81,8 @@ public class JwtHelper : ITokenHelper
         claims.AddEmail(user.Email);
         claims.AddName($"{user.FirstName} {user.LastName}");
         claims.AddRoles(operationClaims.Select(c => c.Name).ToArray());
+        claims.AddAccessTokenExpirationDate(_accessTokenExpiration);
+
         return claims;
     }
 
