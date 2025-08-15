@@ -5,16 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Application.Request
-{
-    public class GetListResponse<T> : BasePageableModel
-    {
-        private IList<T> _items;
+namespace Core.Application.Request;
 
-        public IList<T> Items
-        {
-            get => _items ??= new List<T>();
-            set => _items = value;
-        }
+public class GetListResponse<T> : BasePageableModel
+{
+    private IList<T> _items;
+
+    public IList<T> Items
+    {
+        get => _items ??= new List<T>();
+        set => _items = value;
     }
 }
